@@ -19,7 +19,7 @@
         <div class="col-md-12">
        
           <!-- /.box -->
-          <?php echo $alert; ?>
+          <?php //echo $alert; ?>
 
           <div class="box">
             <div class="box-header">
@@ -49,8 +49,10 @@
                           </span>
                      
                       </div>
-                      <div id="img-hide" class="image-preview" style="margin-top: 10px">
-                          <img src="" id="img" width="250" height="200" alt="">
+                      <div id="img-edit" class="image-preview" style="margin-top: 10px">
+                          <img src="<?=base_url().'uploads/'.$data['img']?>" id="img" width="250" height="200" alt="">
+                          <!-- <img src="" id="img-edit" width="250" height="200" alt=""> -->
+
                         
                       </div>
                   </div>
@@ -59,7 +61,7 @@
                 <div class="col-xs-12 col-md-6 col-sm-8"> 
                   <div class="form-group">
                     <label for="judul">Judul Mading</label>
-                    <input class="form-control" id="judul" type="text" name="judul" placeholder="Tuliskan Judul" />
+                    <input class="form-control" id="judul" type="text" name="judul" placeholder="Tuliskan Judul" value="<?=$data['judul']?>" />
                     
                   </div>
                   
@@ -67,7 +69,7 @@
               </div> 
               <label for="editor">Isi Mading</label>
                 <textarea id="editor" class="textarea" name="isi" placeholder="Place some text here"
-                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?=$data['isi']?></textarea>
                 <input type="submit" class="btn btn-success" value="Post Ke Mading" style="margin-top: 10px; float: right;" />
               </form>
             </div>

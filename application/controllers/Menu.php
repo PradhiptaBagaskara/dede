@@ -2,16 +2,21 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Menu extends CI_Controller {
 
 
     function __construct() {
         parent::__construct();
         $this->load->helper('text');
-        $this->load->model('Input');
+        $this->load->model('Dbms', 'Input');
     }
 
-    public function index() {
+    function index()
+    {
+        redirect('menu/dashboard','refresh');
+    }
+
+    public function post() {
     	$now = new DateTime();
 	
         if($this->input->post())
@@ -35,12 +40,12 @@ class Welcome extends CI_Controller {
             
 		}else{
 			$data = array('upload_data' => $this->upload->data());
-            $url_img = base_url()."uploads/". $data['upload_data']['file_name'];
+            $url_img = $data['upload_data']['file_name'];
             $aplud  = $this->Input->masukan($url_img, $judul, $isi);
            
 
             $data['alert'] = '<div class="alert alert-success alert-dismissible " role="alert">
-            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+            <strong>Selamat!</strong> Data Berhasil di Inputkan.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -59,10 +64,38 @@ class Welcome extends CI_Controller {
    
 
 }
-
-public function data()
+function dashboard()
 {
-    echo "data";
+        $data['data'] = $this->Input->tampil()->result();
+        $data['no']     = 1;
+        $this->load->view('data', $data);
+    
+}
+
+function hapus($value='',$img='')
+{
+    // echo $value." - ".$img;
+    $aksi = $this->Input->delete($value, $img);
+    if ($aksi) {
+        echo("gagal menghapus data");
+
+    }else{
+        redirect('menu/dashboard','refresh');
+
+    }
+}
+
+public function edit($id='')
+{
+    $db     = $this->Input->edit($id)->result_array();
+    $data['data'] = $db[0];
+    // $data['data'] = "<p>asu</p>";
+
+    // var_dump($data);
+    // echo $data['data']['isi'];
+    // echo $data['data']['isi'];
+
+    $this->load->view('edit', $data);
 }
 
 }
