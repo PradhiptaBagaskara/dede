@@ -1,8 +1,6 @@
  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+   
+    <strong>Copyright &copy; E-Mading</strong> All rights
     reserved.
   </footer>
 
@@ -41,15 +39,15 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('#datatable').DataTable({
-      columnDefs: [
-      { width: 10, targets: 0 },
-      { width: 80, targets: 1 },
-      { width: 250, targets: 2 },
-      { width: 70, targets: 3 },
-      { width: 50, targets: 4 }
+      // columnDefs: [
+      // { width: 10, targets: 0 },
+      // { width: 80, targets: 1 },
+      // { width: 250, targets: 2 },
+      // { width: 70, targets: 3 }
+      // // { width: 50, targets: 4 }
 
 
-      ]
+      // ]
     });
 
     $('#date img').mouseover(function(){
@@ -60,11 +58,6 @@
 
 } );
 
- $(document).ready(function() {
-        $('#modalku').on('show.bs.modal', function(e) {
-            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-        });
-    });
 
 </script>
 </body>

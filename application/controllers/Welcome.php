@@ -1,68 +1,56 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('M_api', 'api');
+		$this->load->model('M_web', 'web');
+		$this->session;
+		//Do your magic here
+	}
 
-    function __construct() {
-        parent::__construct();
-        $this->load->helper('text');
-        $this->load->model('Input');
-    }
+	/**
+	 * Index Page for this controller.
+	 *
+	 * Maps to the following URL
+	 * 		http://example.com/index.php/welcome
+	 *	- or -
+	 * 		http://example.com/index.php/welcome/index
+	 *	- or -
+	 * Since this controller is set as the default controller in
+	 * config/routes.php, it's displayed at http://example.com/
+	 *
+	 * So any other public methods not prefixed with an underscore will
+	 * map to /index.php/welcome/<method_name>
+	 * @see https://codeigniter.com/user_guide/general/urls.html
+	 */
+	public function index()
+	{
+		// $this->session->set_userdata('id','1');
 
-    public function index() {
-    	$now = new DateTime();
-	
-        if($this->input->post())
-        {
-        $judul  = $this->input->post('judul');
-        $isi    = $this->input->post('isi');
-        $name = rand(1,999)."-".$_FILES['file']['name'];
 
-        $config['upload_path']          = './uploads/';
-        $config['allowed_types']        = 'gif|jpg|png|jpeg';
-        $config['file_name']            = $name;
-        $config['file_ext_tolower']     = TRUE;
-	
-		$this->load->library('upload', $config);
+		echo base_url();
+		
+		
+	}
 
-		if ( ! $this->upload->do_upload('file')){
-			$error = array('error' => $this->upload->display_errors());
-           
-            echo json_encode($error);
+	public function data()
+	{
+		$field = array('id_admin' => '1',
+						'status' => 'true' );
+		// $make = $this->web->make_tempdb('post', $field);
+		$make = $this->db->insert('session', $field);
 
-            
+		if ($make) {
+		// echo json_encode($this->web->get_tempdb());
+
+			echo("sukses");
 		}else{
-			$data = array('upload_data' => $this->upload->data());
-            $url_img = base_url()."uploads/". $data['upload_data']['file_name'];
-            $aplud  = $this->Input->masukan($url_img, $judul, $isi);
-           
-
-            $data['alert'] = '<div class="alert alert-success alert-dismissible " role="alert">
-            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>';
-            $this->load->view('post',$data);
-
+			echo "gagal";
+		}
+	}
 	
-       
-    }
-}else{
-    $data['alert'] = "";
-    $this->load->view('post',$data);
-
-}
-
-   
-
-}
-
-public function data()
-{
-    echo "data";
-}
-
 }
