@@ -14,6 +14,33 @@ class M_api extends CI_Model {
 			true));
 	}
 
+	function sendNotif($title, $body){
+		$url = "https://fcm.googleapis.com/fcm/send";
+	    $token = "/topics/news";
+	    $serverKey = 'AAAAdKCLzws:APA91bGgztT3sTgMdwfZKE47XaHqzyxTNBUE61Wmg5EvQmIwqk9TTs5eamSnkXZu43D2BOKe6EeGkgnDRefQJHlpTq8fa_o7x8GlRkQLX_U9KWm5W8QH-U0Hq6khpGUPw9lixZb4BEXc';
+	    // $title = "Notification title";
+	    // $body = "Hello I am from Your php server";
+	    $notification = array('title' =>$title , 'body' => $body);
+	    $arrayToSend = array('to' => $token, 'notification' => $notification);
+	    $json = json_encode($arrayToSend);
+	    $headers = array();
+	    $headers[] = 'Content-Type: application/json';
+	    $headers[] = 'Authorization: key='. $serverKey;
+	    $ch = curl_init();
+	    curl_setopt($ch, CURLOPT_URL, $url);
+	    curl_setopt($ch, CURLOPT_CUSTOMREQUEST,"POST");
+	    curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+	    curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
+	    //Send the request
+	    $response = curl_exec($ch);
+	    //Close request
+	    if ($response === FALSE) {
+	    die('FCM Send Error: ' . curl_error($ch));
+	    }
+	    // echo $response;
+	    curl_close($ch);
+	}
+
 	function getUser($key=""){
 		$this->db->where('auth_key', $key);
 		return $this->db->get('user');
@@ -128,12 +155,23 @@ class M_api extends CI_Model {
  		# code...
  	}
 
- 		public function postMasukan($value = array())
+ 	public function postMasukan($value = array())
  	{
 
 	$ret = $this->db->insert('masukan', $value);
 	return $ret; 		
  		# code...
+ 	}
+
+ 	public function getKat($userID='')
+ 	{
+ 		$this->db->select('kategori.nama_kategori, kategori.id_kategori');
+ 		$this->db->from('ukm');
+ 		$this->db->join('kategori', 'ukm.id_kategori = kategori.id_kategori', 'left');
+ 		$this->db->join('user', 'ukm.id_user = user.id_user', 'left');
+ 		$this->db->where('ukm.id_user', $userID);
+ 		$ret = $this->db->get();
+ 		return $ret->result();
  	}
 
 }

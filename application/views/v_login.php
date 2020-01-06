@@ -41,20 +41,21 @@
         <span id="message"></span>
       </div> 
 
-    <form id="login-form" method="post">
+    <form id="login-form" method="post" action="">
       <div class="form-group has-feedback">
-        <input type="email" id="email" class="form-control" placeholder="Email">
+        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" id="password" class="form-control" placeholder="Password">
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
      
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" id="btn-login" class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin '></i>">Sign In</button>
+          <input type="submit" name="submit" class="btn btn-primary btn-lg" value="Sign In">
+         <!--  <button type="submit" id="btn-login" class="btn btn-primary btn-lg" data-loading-text="<i class='fa fa-spinner fa-spin '></i>">Sign In</button> -->
           <!-- <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button> -->
         </div>
         <!-- /.col -->
@@ -75,75 +76,6 @@
 <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="assets/plugins/iCheck/icheck.min.js"></script>
-<script type="text/javascript">
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' /* optional */
-    });
-  });
 
-
-
-
-$('#btn-login').on('click', function(){
-
-  var $this = $(this);
-  $this.button('loading');
-
-  $('#login-form').on('submit', function(e) {
-    e.preventDefault();
-      console.log("jalan");
-       var email = $("#email").val().trim();
-        var password = $("#password").val().trim();
-
-    var login = function(){
-      $.ajax({
-            url: "<?=base_url('login/login')?>",
-            type: "post",
-            data: {email:email,password:password},
-            cache: false,
-            dataType:'json',
-            success: function(data){
-
-              $this.button('reset');
-              console.log(data);
-            // $('#message').html(data.message);
-            $('#logText').html('Login');
-            if(data.error){
-             var response = $('#responseDiv').removeClass('alert-success').addClass('alert-danger').html(data.message).show();
-             $("#header-box").hide();
-             
-             setTimeout(function(){
-              response.hide();
-              $("#header-box").show();
-             }, 3000);
-            }
-            else{
-              var response = $('#responseDiv').removeClass('alert-danger').addClass('alert-success').html(data.message).show();
-              // $('#form-login')[0].reset();
-             
-              
-              $("#header-box").hide();
-
-              setTimeout(function(){
-                response.hide();
-                location.reload();
-              }, 3000);
-            }
- 
-            }
-    });
-    }
-    setTimeout(login, 4000);
-
-  });
-
-
-
-});
-
-</script>
 </body>
 </html>

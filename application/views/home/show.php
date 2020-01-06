@@ -46,6 +46,13 @@
                     <?=isset($cerita) ? $cerita->isi : '' ?>
                   </div>
                 </div>
+
+                <div class="row">
+                  <label for="nama" class="col-sm-2 control-label">Aksi</label>
+                  <div class="col-sm-10">
+                    <a href="<?=base_url('admin/home/delete/'.$cerita->id_cerita.'/'.$cerita->img)?>" class="btn btn-danger btn-sm" title="">delete</a>
+                  </div>
+                </div>
               </div>
               <!-- /.box-body -->
           </div>

@@ -7,7 +7,7 @@ class Home extends CI_Controller {
 		parent::__construct();
 		// $this->load->library('session');
 		$this->load->model('M_web', 'web');
-		
+
 		
 	}
 
@@ -41,11 +41,11 @@ class Home extends CI_Controller {
 		redirect(base_url('admin/home'));
 	}
 
-	public function test()
+	public function delete($id,$img)
 	{
-		echo '<iframe class="preview" src="http://www.w3schools.com">
-  <p>Your browser does not support iframes.</p>
-</iframe>';
+		$this->web->delete_cerita($id, $img);
+		redirect(base_url('home'),'refresh');
+		
 	}
 
 }

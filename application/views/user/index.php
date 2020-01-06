@@ -11,7 +11,7 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active"><a href="#">Ukm</a></li>
       </ol><br>
-              <a href="<?=base_url()?>admin/Ukm/create" class="btn btn-primary" >Create New</a>
+              <a href="<?=base_url()?>admin/user/create" class="btn btn-primary" >Create User</a>
     </section>
 
     <!-- Main content -->
@@ -59,7 +59,9 @@
                   <td>
                 
                     <a href="<?=base_url('admin/user/edit/').$user->id_user?>" class="btn btn-success">Edit</a>
-                    <a href="<?=base_url('admin/user/delete/').$user->id_user?>" class="btn btn-danger">Delete</a>
+                    <?php if ($user->is_admin == 0): ?>
+                    <a href="<?=base_url('admin/user/delete/').$user->id_user?>" class="btn btn-danger">Delete</a>                      
+                    <?php endif ?>
                   </td>
                 </tr>
                 <?php } }?>

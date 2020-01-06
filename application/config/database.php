@@ -76,9 +76,15 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
+	// offline
 	'username' => 'root',
 	'password' => '',
 	'database' => 'ukm_dede',
+	// online
+	// 'username' => 'id12139827_emading',
+	// 'password' => 'Admin@123',
+	// 'database' => 'id12139827_emading',
+	// end
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -90,7 +96,7 @@ $db['default'] = array(
 	'swap_pre' => '',
 	'encrypt' => FALSE,
 	'compress' => FALSE,
-	'stricton' => FALSE,
+	'stricton' => TRUE,
 	'failover' => array(),
 	'save_queries' => TRUE
 );

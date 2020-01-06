@@ -3,50 +3,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_web extends MY_Model {
 
-		public function __construct(){
+	public function __construct(){
 			$table = "cerita";
 			parent::__construct($table);
 		}
 
-		public function login($email){
+	public function login($email){
 		$this->db->where('email', $email);
-		$query = $this->db->get('admin');
+		$query = $this->db->get('user');
 		return $query->row_array();
 		}
 
-		function cek_pass($field="", $value="", $pass=""){
-		$this->db->select('password');		
-		$this->db->where($field, $value);
-		$dbku = $this->db->get('admin');
+	function cek_pass($pass, array $where){
+		// $this->db->select('password');
+		// $this->db->from('user');		
+		$this->db->where($where);
+		$dbku = $this->db->get('user');
 		$db_pass = $dbku->row_array();
 		$isi = $db_pass['password'];
-		// return $isi;
+		// return $db_pass;
 
 		return password_verify($pass, $isi);
 	}
 
-	public function cek_ses_db($db='')
+	public function delete_cerita($id, $imgurl)
 	{
-		$this->db->select('count(*)');
-		$cek = $this->db->get($db);
-		$hasil = $cek->row_array();
-		return $hasil['count(*)'];
-	}
-	public function cek_ses_where($db='',$where='')
-	{
-		$this->db->select('count(*)');
-		$cek = $this->db->get($db);
-		$this->db->where('id_admin', $where);
-		$hasil = $cek->row_array();
-		return $hasil['count(*)'];
+		@unlink("/uploads/".$imgurl);
+		$this->db->where('id_cerita', $id);
+		$this->db->delete('cerita');
 	}
 
-	public function getAdmin()
+	public function cek_login()
 	{
-		$db = $this->db->get('session')->row_array();
-		$this->db->where('id', $db['id_admin']);
-		return $this->db->get('admin')->row_array();
+		if (empty($this->session->userdata('id'))){
+			redirect(base_url().'login','refresh');
+		}else{
+			redirect(base_url().'admin/home','refresh');
+
+		}
 	}
+
+	public function store_login($email='', $pass='')
+	{
+		$data = $this->cek_pass($pass, ['email'=> $email, 'is_admin' => 1]);
+		if ($data) {
+			$this->db->where(['email'=>$email, 'is_admin'=> 1]);
+			$db = $this->db->get('user');
+			return $db->row_array();		
+		}
+		else{
+			return false;
+		}
+	}
+
+
+
 
 	public function getCerita()
  	{
@@ -59,12 +70,9 @@ class M_web extends MY_Model {
 		$this->db->order_by('DATE(cerita.date)', 'desc');
 		// $this->db->where('cerita.id_user', 'user.id_user');
 		// $this->db->where('cerita.id_kategori', 'kategori.id_kategori');
-
 		$query = $this->db->get();
 		return $query->result_array();
  	}
-
-
  	
 
 }
