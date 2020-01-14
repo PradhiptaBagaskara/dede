@@ -50,7 +50,13 @@
                 <div class="row">
                   <label for="nama" class="col-sm-2 control-label">Aksi</label>
                   <div class="col-sm-10">
+                    <?php if (empty($cerita->img)): ?>
+                    <a href="<?=base_url('admin/home/delete/'.$cerita->id_cerita.'/')?>null" class="btn btn-danger btn-sm" title="">delete</a>
+
+                    <?php else: ?>
                     <a href="<?=base_url('admin/home/delete/'.$cerita->id_cerita.'/'.$cerita->img)?>" class="btn btn-danger btn-sm" title="">delete</a>
+
+                    <?php endif ?>
                   </div>
                 </div>
               </div>

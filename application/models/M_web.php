@@ -28,7 +28,11 @@ class M_web extends MY_Model {
 
 	public function delete_cerita($id, $imgurl)
 	{
-		@unlink("/uploads/".$imgurl);
+	    try {
+		@unlink(getcwd()."/uploads/".$imgurl);
+		} catch (Exception $e) {
+			
+		}
 		$this->db->where('id_cerita', $id);
 		$this->db->delete('cerita');
 	}

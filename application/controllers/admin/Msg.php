@@ -23,8 +23,7 @@ class Msg extends CI_Controller {
 		$img = $this->api->upload_file('img');
  		$imgName = $img['file']['file_name'];
 		$kategori = $this->kat->getAll('kategori', ['nama_kategori'=>'administrator']);
-
-
+		$idAdmin = $this->db->get_where('user', ['is_admin'=> 1])->row()->id_user;
 
  		$data = array('id_kategori' => $kategori['id_kategori'], 						
  						'judul' => $this->input->post('judul'),
@@ -32,15 +31,18 @@ class Msg extends CI_Controller {
  						'is_admin' => 1,
  						'diskripsi' => strip_tags($this->input->post('diskripsi')),
  						'isi' => $this->input->post('isi'),
+ 						'id_user' => $idAdmin,
  						'status' => 'enable'
 
  						 );
- 		if ($this->api->postCerita($data)) {
-			$this->api->sendNotif($this->input->post('judul'), 
+ 		// var_dump($data);
+ 		// if ($this->api->postCerita($data)) {
+			$data = $this->api->sendNotif($this->input->post('judul'), 
 				strip_tags($this->input->post('diskripsi')));
+			echo "string";
 
- 			redirect(base_url().'admin/home','refresh');
- 		}		
+ 			// redirect(base_url().'admin/home','refresh');
+ 		// }		
 	}
 
 

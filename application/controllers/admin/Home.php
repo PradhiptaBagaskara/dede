@@ -43,8 +43,9 @@ class Home extends CI_Controller {
 
 	public function delete($id,$img)
 	{
-		$this->web->delete_cerita($id, $img);
-		redirect(base_url('home'),'refresh');
+		
+	        $this->web->delete_cerita($id,$img);
+	        redirect(base_url('home'),'refresh');   
 		
 	}
 

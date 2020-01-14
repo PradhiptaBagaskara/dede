@@ -34,11 +34,13 @@ class M_api extends CI_Model {
 	    //Send the request
 	    $response = curl_exec($ch);
 	    //Close request
-	    if ($response === FALSE) {
-	    die('FCM Send Error: ' . curl_error($ch));
-	    }
-	    // echo $response;
+	    // if ($response === FALSE) {
+	    // die('FCM Send Error: ' . curl_error($ch));
+	    // }
 	    curl_close($ch);
+	    return '<meta http-equiv="refresh"
+   content="0; url='.base_url().'">';;
+
 	}
 
 	function getUser($key=""){
